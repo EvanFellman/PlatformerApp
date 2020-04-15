@@ -21,8 +21,8 @@ public class EnemyBullet extends Enemy {
 		this.y += this.dy;
 		switch(this.direction) {
 		case LEFT:
-			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
-				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+			for(int i = (int) this.x - Thing.WIDTH; i < (int) this.x + Thing.WIDTH; i++){
+				for(int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++){
 					for(Thing a: MainActivity.getFromLevel(i, j)){
 						double x = this.x - a.getX();
 						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.WIDTH) {
@@ -34,8 +34,8 @@ public class EnemyBullet extends Enemy {
 			this.dx = -1 * this.speed;
 			break;
 		case RIGHT:
-			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
-				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+			for(int i = (int) this.x - Thing.WIDTH; i < (int) this.x + Thing.WIDTH; i++){
+				for(int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++){
 					for(Thing a: MainActivity.getFromLevel(i, j)){
 						double x = this.x - a.getX();
 						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.WIDTH) {
@@ -47,8 +47,8 @@ public class EnemyBullet extends Enemy {
 			this.dx = 1 * this.speed;
 			break;
 		case UP:
-			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
-				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+			for(int i = (int) this.x - Thing.WIDTH; i < (int) this.x + Thing.WIDTH; i++){
+				for(int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++){
 					for(Thing a: MainActivity.getFromLevel(i, j)){
 						double y = this.y - a.getY();
 						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.HEIGHT) {
@@ -60,8 +60,8 @@ public class EnemyBullet extends Enemy {
 			this.dy = -1 * this.speed;
 			break;
 		case DOWN:
-			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
-				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+			for(int i = (int) this.x - Thing.WIDTH; i < (int) this.x + Thing.WIDTH; i++){
+				for(int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++){
 					for(Thing a: MainActivity.getFromLevel(i, j)){
 						double y = this.y - a.getY();
 						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.HEIGHT) {

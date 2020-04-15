@@ -14,8 +14,8 @@ public abstract class Enemy extends Thing {
 		}
 		boolean nearWalll = false, nearWallMovingl = false, nearWallr = false, nearWallMovingr = false;
 		this.x += this.dx;
-		for(int i = (int)this.x - 1; i <= (int)this.x + 1; i++){
-			for(int j = (int) this.y - 1; j <= (int)this.y + 1; j++){
+		for(int i = (int)this.x - Thing.WIDTH; i < (int)this.x + Thing.WIDTH; i++){
+			for(int j = (int) this.y - Thing.HEIGHT; j < (int)this.y + Thing.HEIGHT; j++){
 				for(Thing a: MainActivity.getFromLevel(i, j)){
 					if((a.id.contains("wall") || (!this.equals(a) && a.id.equals("player"))) && this.isTouching(a)) {
 						if(a.x > this.x) {
@@ -76,8 +76,8 @@ public abstract class Enemy extends Thing {
 		this.dy += MainActivity.GRAVITY;
 		this.y += this.dy;
 		boolean nearWalla = false, nearWallMovinga = false, nearWallb = false, nearWallMovingb = false;
-		for(int i = (int)this.x - 1; i <= (int)this.x + 1; i++) {
-			for (int j = (int) this.y - 1; j <= (int) this.y + 1; j++) {
+		for(int i = (int)this.x - Thing.WIDTH; i < (int)this.x + Thing.WIDTH; i++){
+			for(int j = (int) this.y - Thing.HEIGHT; j < (int)this.y + Thing.HEIGHT; j++){
 				for (Thing a : MainActivity.getFromLevel(i, j)) {
 					if(this.isTouching(a) && a.id.contains("wall")) {
 						if(a.y > this.y) {

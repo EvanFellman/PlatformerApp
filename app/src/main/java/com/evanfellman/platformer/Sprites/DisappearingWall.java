@@ -10,8 +10,8 @@ public class DisappearingWall extends Thing {
 	}
 	
 	public boolean move() {
-		for(int i = (int)this.x - 1; i <= (int)this.x + 1; i++) {
-			for (int j = (int) this.y - 1; j <= (int) this.y + 1; j++) {
+		for(int i = (int)this.x - Thing.WIDTH; i < (int)this.x + Thing.WIDTH; i++) {
+			for (int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++) {
 				for (Thing a : MainActivity.getFromLevel(i, j)) {
 					if (a.id.equals("player") || a.id.contains("enemy")) {
 						disappearCount--;

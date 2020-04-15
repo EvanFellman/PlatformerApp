@@ -12,8 +12,8 @@ public class BlueSwitch extends Thing {
 	public boolean move() {
 		boolean wasTouched = false;
 		if(this.touchedLast <= 0) {
-			for (int i = (int) this.x - 1; i <= (int) this.x + 1; i++) {
-				for (int j = (int) this.y - 1; j < (int) this.y + 1; j++) {
+			for (int i = (int) this.x - Thing.WIDTH; i < (int) this.x + Thing.WIDTH; i++) {
+				for (int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++) {
 					for (Thing a : MainActivity.getFromLevel(i, j)) {
 						if (this.isNextTo(a) && (a.id.equals("player") || a.id.contains("enemy"))) {
 							wasTouched = true;
