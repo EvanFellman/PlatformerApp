@@ -92,16 +92,17 @@ public class EnemySmart extends Enemy {
 					for(int i = 1; i <= (this.speed == Thing.FAST_SPEED ? 4 : 3); i++) {
 						for(int j = -2; j <= 1; j++) {
 							for(Thing a : MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + (j * Thing.HEIGHT))){
-								ArrayList<Thing> aboveA = MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + ((j - 1) * Thing.HEIGHT));
-								boolean aboveWall = false;
-								for(Thing abv: aboveA){
-									if(abv.id.contains("wall")){
-										aboveWall = true;
-										break;
+								for(int aboveI = -1 * Thing.WIDTH; aboveI < Thing.WIDTH; aboveI++){
+									boolean aboveWall = false;
+									for(Thing abv: MainActivity.getFromLevel(this.x + (i * Thing.WIDTH) + aboveI, this.y + ((j - 1) * Thing.HEIGHT))){
+										if(abv.id.contains("wall")){
+											aboveWall = true;
+											break;
+										}
 									}
-								}
-								if ((aboveA.isEmpty() || !aboveWall) && (a.id.contains("wall") || a.id.contains("enemy"))) {
-									somethingToJumpTo = true;
+									if (!aboveWall && (a.id.contains("wall") || a.id.contains("enemy"))) {
+										somethingToJumpTo = true;
+									}
 								}
 							}
 						}
@@ -109,16 +110,17 @@ public class EnemySmart extends Enemy {
 					for(int i = 0; i <= (this.speed == Thing.FAST_SPEED ? 4 : 3); i++) {
 						for(int j = 2; j <= 5; j++) {
 							for(Thing a : MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + (j * Thing.HEIGHT))) {
-								ArrayList<Thing> aboveA = MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + ((j - 1) * Thing.HEIGHT));
-								boolean aboveWall = false;
-								for (Thing abv : aboveA) {
-									if (abv.id.contains("wall")) {
-										aboveWall = true;
-										break;
+								for(int aboveI = -1 * Thing.WIDTH; aboveI < Thing.WIDTH; aboveI++){
+									boolean aboveWall = false;
+									for(Thing abv: MainActivity.getFromLevel(this.x + (i * Thing.WIDTH) + aboveI, this.y + ((j - 1) * Thing.HEIGHT))){
+										if(abv.id.contains("wall")){
+											aboveWall = true;
+											break;
+										}
 									}
-								}
-								if ((aboveA.isEmpty() || !aboveWall) && (a.id.contains("enemy") || a.id.contains("wall"))) {
-									somethingToFallTo = true;
+									if (!aboveWall && (a.id.contains("wall") || a.id.contains("enemy"))) {
+										somethingToFallTo = true;
+									}
 								}
 							}
 						}
@@ -127,16 +129,17 @@ public class EnemySmart extends Enemy {
 					for(int i = (this.speed == Thing.FAST_SPEED ? -3 : -2); i <= -1; i++) {
 						for(int j = -2; j <= 1; j++) {
 							for(Thing a : MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + (j * Thing.HEIGHT))){
-								ArrayList<Thing> aboveA = MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + ((j - 1) * Thing.HEIGHT));
-								boolean aboveWall = false;
-								for(Thing abv: aboveA){
-									if(abv.id.contains("wall")){
-										aboveWall = true;
-										break;
+								for(int aboveI = -1 * Thing.WIDTH; aboveI < Thing.WIDTH; aboveI++){
+									boolean aboveWall = false;
+									for(Thing abv: MainActivity.getFromLevel(this.x + (i * Thing.WIDTH) + aboveI, this.y + ((j - 1) * Thing.HEIGHT))){
+										if(abv.id.contains("wall")){
+											aboveWall = true;
+											break;
+										}
 									}
-								}
-								if ((aboveA.isEmpty() || !aboveWall) && (a.id.contains("wall") || a.id.contains("enemy"))) {
-									somethingToJumpTo = true;
+									if (!aboveWall && (a.id.contains("wall") || a.id.contains("enemy"))) {
+										somethingToJumpTo = true;
+									}
 								}
 							}
 						}
@@ -144,16 +147,17 @@ public class EnemySmart extends Enemy {
 					for(int i = (this.speed == Thing.FAST_SPEED ? -3 : -2); i <= 0; i++) {
 						for(int j = 2; j <= 5; j++) {
 							for(Thing a : MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + (j * Thing.HEIGHT))) {
-								ArrayList<Thing> aboveA = MainActivity.getFromLevel(this.x + (i * Thing.WIDTH), this.y + ((j - 1) * Thing.HEIGHT));
-								boolean aboveWall = false;
-								for (Thing abv : aboveA) {
-									if (abv.id.contains("wall")) {
-										aboveWall = true;
-										break;
+								for(int aboveI = -1 * Thing.WIDTH; aboveI < Thing.WIDTH; aboveI++){
+									boolean aboveWall = false;
+									for(Thing abv: MainActivity.getFromLevel(this.x + (i * Thing.WIDTH) + aboveI, this.y + ((j - 1) * Thing.HEIGHT))){
+										if(abv.id.contains("wall")){
+											aboveWall = true;
+											break;
+										}
 									}
-								}
-								if ((aboveA.isEmpty() || !aboveWall) && (a.id.contains("enemy") || a.id.contains("wall"))) {
-									somethingToFallTo = true;
+									if (!aboveWall && (a.id.contains("wall") || a.id.contains("enemy"))) {
+										somethingToFallTo = true;
+									}
 								}
 							}
 						}

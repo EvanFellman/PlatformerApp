@@ -1,6 +1,6 @@
 package com.evanfellman.platformer.Sprites;
 
-import com.evanfellman.platformer.PlayerState;
+import com.evanfellman.platformer.Activites.MainActivity;
 
 public class Shield extends Thing{
 	public Shield(double x, double y) {
@@ -9,7 +9,7 @@ public class Shield extends Thing{
 	
 	@Override
 	public boolean move() {
-		for(Player p: Main.player) {
+		for(Player p: MainActivity.player) {
 			if(p.isTouching(this)) {
 				p.playerState.setValue(PlayerState.SHIELD);
 				this.die();
@@ -20,7 +20,6 @@ public class Shield extends Thing{
 	
 	@Override
 	public void die() {
-		Main.removeFromMap(this);
-		Main.level.remove(this);
+		MainActivity.removeFromLevel(this);
 	}
 }

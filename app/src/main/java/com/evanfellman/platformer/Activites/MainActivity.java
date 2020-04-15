@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static int startX;
     public static int startY;
     public static boolean isBlueGateOpen = false;
-    public static boolean isGreenGateOpen = false;
+    public static boolean isRedGateOpen = false;
     public static ArrayList<Player> player;
     public static boolean deadPlayer;
     public static int deadPlayerCounter;
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         player = new ArrayList<Player>();
         level = new SparseArray<>();
         isBlueGateOpen = false;
-        isGreenGateOpen = false;
+        isRedGateOpen = false;
         deadPlayer = false;
         deadPlayerCounter = 100;
         DEATH_BELOW = levelImg.getHeight() * Thing.HEIGHT;

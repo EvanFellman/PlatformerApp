@@ -1,6 +1,6 @@
 package com.evanfellman.platformer.Sprites;
 
-import com.evanfellman.platformer.PlayerState;
+import com.evanfellman.platformer.Activites.MainActivity;
 
 public class SpikeDestroyer extends Thing {
 
@@ -9,7 +9,7 @@ public class SpikeDestroyer extends Thing {
 	}
 	
 	public boolean move() {
-		for(Player p: Main.player) {
+		for(Player p: MainActivity.player) {
 			if(p.isTouching(this)) {
 				p.playerState.setValue(PlayerState.SPIKEDESTROYER);
 				this.die();
@@ -20,7 +20,6 @@ public class SpikeDestroyer extends Thing {
 
 	@Override
 	public void die() {
-		Main.removeFromMap(this);
-		Main.level.remove(this);
+		MainActivity.removeFromLevel(this);
 	}
 }

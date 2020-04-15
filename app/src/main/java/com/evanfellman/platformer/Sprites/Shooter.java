@@ -1,5 +1,7 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class Shooter extends Thing {
 	public int direction;
 	public final static int UP = 1;
@@ -13,35 +15,44 @@ public class Shooter extends Thing {
 		super(x, y, "wall shooter " + (direction == UP ? "up" : (direction == DOWN ? "down" : (direction == LEFT ? "left" : "right"))), direction == UP ? 2 : (direction == DOWN ? 3 : (direction == LEFT ? 0 : 1)), 4);
 		this.direction = direction;
 		this.speed = speed;
-		SHOOTING_WAIT *= Main.SLOW_SPEED / this.speed;
+		SHOOTING_WAIT *= Thing.SLOW_SPEED / this.speed;
 		countDown = SHOOTING_WAIT;
 	}
 	
 	public boolean move() {
-		int i = 0;
-		int j = 0;
+		int iS = 0;
+		int iF = 0;
+		int jS = 0;
+		int jF = 0;
 		switch(this.direction) {
 		case UP:
-			j = -1 * Thing.HEIGHT;
+			jF = 0;
+			jS = -1 * Thing.HEIGHT;
 			break;
 		case DOWN:
-			j = Thing.HEIGHT;
+			jF = Thing.HEIGHT;
+			jS = 0;
 			break;
 		case LEFT:
-			i = -1 * Thing.WIDTH;
+			iF = 0;
+			iS = -1 * Thing.WIDTH;
 			break;
 		case RIGHT:
-			i = Thing.WIDTH;
+			iF = 0;
+			iS = Thing.WIDTH;
 			break;
 		}
-		Thing moveable = Main.getFromMapMoving(this.x + i, this.y + j);
-		Thing stable = Main.getFromMapStable(this.x + i, this.y + j);
-		if(moveable == null && (stable == null || !stable.id.contains("wall"))) {
+		boolean empty = true;
+		for(int i = iS; i < iF; i++){
+			for(int j = jS; j < jF; j++){
+				empty = empty && MainActivity.getFromLevel(i, j).isEmpty();
+			}
+		}
+		if(empty) {
 			this.countDown--;
 			if(this.countDown <= 0) {
-				Thing bullet = new EnemyBullet(this.x + i, this.y + j, this.direction, this.speed);
-				Main.level.add(bullet);
-				Main.putInMap(bullet);
+				Thing bullet = new EnemyBullet(this.x + (iS == 0 ? iF : iS), this.y + (jS == 0 ? jF : jS), this.direction, this.speed);
+				MainActivity.putInLevel(bullet);
 				this.countDown = SHOOTING_WAIT;
 			}
 		}

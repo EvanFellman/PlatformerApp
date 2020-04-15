@@ -1,6 +1,6 @@
 package com.evanfellman.platformer.Sprites;
 
-import com.evanfellman.platformer.PlayerState;
+import com.evanfellman.platformer.Activites.MainActivity;
 
 public class Spike extends Thing {
 
@@ -10,18 +10,19 @@ public class Spike extends Thing {
 	
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean move() {
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				Thing a = Main.getFromMapMoving(this.x + (i * Main.SPRITE_WIDTH), this.y + (j * Main.SPRITE_HEIGHT));
-				if(a != null && this.isTouching(a)) {
-					if(a.id.contains("enemy")) {
-						a.die();
-					} else if(a.id.equals("player")) {
-						if(((Player) a).playerState.equals(PlayerState.SPIKEDESTROYER)) {
-							this.die();
-						} else {
+		for(int i = (int)this.x - Thing.WIDTH; i < (int)this.x + Thing.WIDTH; i++) {
+			for(int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++) {
+				for(Thing a: MainActivity.getFromLevel(i, j)){
+					if( this.isTouching(a)) {
+						if(a.id.contains("enemy")) {
 							a.die();
-							return Main.deadPlayer;
+						} else if(a.id.equals("player")) {
+							if(((Player) a).playerState.equals(PlayerState.SPIKEDESTROYER)) {
+								this.die();
+							} else {
+								a.die();
+								return MainActivity.deadPlayer;
+							}
 						}
 					}
 				}
@@ -31,7 +32,6 @@ public class Spike extends Thing {
 	}
 	
 	public void die() {
-		Main.removeFromMap(this);
-		Main.level.remove(this);
+		MainActivity.removeFromLevel(this);
 	}
 }

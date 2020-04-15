@@ -1,6 +1,8 @@
 package com.evanfellman.platformer.Sprites;
 
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class WallMoving extends Thing {
 	public static final int UP = 1;
 	public static final int DOWN = 2;
@@ -17,43 +19,46 @@ public class WallMoving extends Thing {
 	public boolean move() {
 		this.x += this.dx;
 		this.y += this.dy;
-		for(int i = 0; i < Main.level.size(); i++) {
-			Thing a = Main.level.get(i);
-			if(a == null || !this.isTouching(a) || this.equals(a) || !a.id.contains("wall")) {
-				continue;
-			}
-			switch(this.direction) {
-			case UP:
-				if(a.id.contains("wall") && this.below(a)) {
-					if(a.dy >= 0  || (a.id.equals("wall moving") && ((WallMoving) a).direction == DOWN)) {
-						this.direction = DOWN;
+		for(int i = (int)this.x - Thing.WIDTH; i < (int)this.x + Thing.WIDTH; i++) {
+			for (int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++) {
+				for (Thing a : MainActivity.getFromLevel(i, j)) {
+					if (a == null || !this.isTouching(a) || this.equals(a) || !a.id.contains("wall")) {
+						continue;
 					}
-					this.y = a.getY() + Main.SPRITE_HEIGHT;
-				}
-				break;
-			case DOWN:
-				if(a.id.contains("wall") && this.above(a)) {
-					if(a.dy <= 0 || (a.id.equals("wall moving") && ((WallMoving) a).direction == UP)) {
-						this.direction = UP;
+					switch (this.direction) {
+						case UP:
+							if (a.id.contains("wall") && this.below(a)) {
+								if (a.dy >= 0 || (a.id.equals("wall moving") && ((WallMoving) a).direction == DOWN)) {
+									this.direction = DOWN;
+								}
+								this.y = a.getY() + Thing.HEIGHT;
+							}
+							break;
+						case DOWN:
+							if (a.id.contains("wall") && this.above(a)) {
+								if (a.dy <= 0 || (a.id.equals("wall moving") && ((WallMoving) a).direction == UP)) {
+									this.direction = UP;
+								}
+								this.y = a.getY() - Thing.HEIGHT;
+							}
+							break;
+						case LEFT:
+							if (this.toRightOf(a)) {
+								this.direction = RIGHT;
+								this.x = a.getX() + Thing.WIDTH;
+							}
+							break;
+						case RIGHT:
+							if (this.toLeftOf(a)) {
+								this.direction = LEFT;
+								this.x = a.getX() - Thing.WIDTH;
+							}
+							break;
 					}
-					this.y = a.getY() - Main.SPRITE_HEIGHT;
 				}
-				break;
-			case LEFT:
-				if(this.toRightOf(a)) {
-					this.direction = RIGHT;
-					this.x = a.getX() + Main.SPRITE_WIDTH;
-				}
-				break;
-			case RIGHT:
-				if(this.toLeftOf(a)) {
-					this.direction = LEFT;
-					this.x = a.getX() - Main.SPRITE_WIDTH;
-				}
-				break;
 			}
-			
 		}
+
 		switch(this.direction) {
 		case UP:
 			this.dx = 0;

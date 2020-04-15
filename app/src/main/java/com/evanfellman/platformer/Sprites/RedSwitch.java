@@ -1,5 +1,7 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class RedSwitch extends Thing {
 	private int touchedLast;
 	public RedSwitch(float x, float y) {
@@ -9,20 +11,20 @@ public class RedSwitch extends Thing {
 	
 	public boolean move() {
 		boolean wasTouched = false;
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				Thing a = Main.getFromMapMoving(this.x + (i * Main.SPRITE_WIDTH), this.y + (j * Main.SPRITE_HEIGHT));
-				if(a != null && this.isNextTo(a) && (a.id.equals("player") || a.id.contains("enemy"))) {
-					if(this.touchedLast <= 0) {
-						wasTouched = true;
-						Main.isRedGateOpen = !Main.isRedGateOpen;
+		if(this.touchedLast <= 0) {
+			for (int i = (int) this.x - Thing.WIDTH; i < (int) this.x + Thing.WIDTH; i++) {
+				for (int j = (int) this.y - Thing.HEIGHT; j < (int) this.y + Thing.HEIGHT; j++) {
+					for (Thing a : MainActivity.getFromLevel(i, j)) {
+						if (this.isNextTo(a) && (a.id.equals("player") || a.id.contains("enemy"))) {
+							wasTouched = true;
+							this.touchedLast = 5;
+							MainActivity.isRedGateOpen = !MainActivity.isRedGateOpen;
+						}
 					}
-					this.touchedLast = 5;
 				}
 			}
-		}
-		if(!wasTouched) {
-			this.touchedLast -= 1;
+		} else {
+			this.touchedLast--;
 		}
 		return false;
 	}

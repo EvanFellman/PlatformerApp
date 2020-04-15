@@ -18,7 +18,6 @@ public class Player extends Thing {
 		this.wReleased = false;
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean move() {
 		if(!MainActivity.upPressed) {
