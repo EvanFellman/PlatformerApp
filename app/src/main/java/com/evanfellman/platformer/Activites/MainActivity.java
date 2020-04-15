@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.View;
-
 import com.evanfellman.platformer.R;
 import com.evanfellman.platformer.Sprites.BlueGate;
 import com.evanfellman.platformer.Sprites.BlueReverseGate;
@@ -44,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
     public static int cameraY;
     public static int startX;
     public static int startY;
+    public static boolean isBlueGateOpen = false;
+    public static boolean isGreenGateOpen = false;
     public static ArrayList<Player> player;
     public static boolean deadPlayer;
     public static int deadPlayerCounter;
+    public static Point screen;
     //Indexed by x coordinate then y coordinate then its a set
     public static SparseArray<SparseArray<ArrayList<Thing>>> level;
     @Override
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
         TEXTURES = BitmapFactory.decodeResource(getResources(), R.drawable.textures);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        Display display = getWindowManager().getDefaultDisplay();
+        screen = new Point();
+        display.getSize(screen);
     }
 
     public void goToCustomLevel(View view){
@@ -102,11 +107,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static void removeFromLevel(Thing x){
+        if(!(level.indexOfKey((int) x.getX()) < 0 || level.get((int) x.getX()).indexOfKey((int) x.getY()) < 0)){
+            level.get((int)x.getX()).get((int)x.getY()).remove(x);
+        }
+    }
+
     public static void loadLevel(String file) {
         //load from file
         Bitmap levelImg = BitmapFactory.decodeFile(file);
         player = new ArrayList<Player>();
         level = new SparseArray<>();
+        isBlueGateOpen = false;
+        isGreenGateOpen = false;
         for(int x = 0; x < levelImg.getWidth(); x++) {
             for (int y = 0; y < levelImg.getHeight(); y++) {
                 int pixel = levelImg.getPixel(x, y);
@@ -209,11 +222,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (Color.red(pixel) == 224 && Color.green(pixel) == 0 && Color.blue(pixel) == 0) {
                     putInLevel(new SpikeDestroyer(Thing.WIDTH * x, Thing.HEIGHT * y));
                 }
-                Display display = getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                cameraX = (int) (player.get(0).getX() - (size.x * 0.5));
-                cameraY = (int) (player.get(0).getY() - (size.y * 0.5));
+                cameraX = (int) (player.get(0).getX() - (screen.x * 0.5));
+                cameraY = (int) (player.get(0).getY() - (screen.y * 0.5));
             }
         }
     }

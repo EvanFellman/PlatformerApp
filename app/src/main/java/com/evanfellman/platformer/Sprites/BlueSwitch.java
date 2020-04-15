@@ -1,5 +1,7 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class BlueSwitch extends Thing {
 	private int touchedLast;
 	public BlueSwitch(float x, float y) {
@@ -9,20 +11,20 @@ public class BlueSwitch extends Thing {
 	
 	public boolean move() {
 		boolean wasTouched = false;
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				Thing a = Main.getFromMapMoving(this.x + (i * Main.SPRITE_WIDTH), this.y + (j * Main.SPRITE_HEIGHT));
-				if(a != null && this.isNextTo(a) && (a.id.equals("player") || a.id.contains("enemy"))) {
-					if(this.touchedLast <= 0) {
-						wasTouched = true;
-						Main.isBlueGateOpen = !Main.isBlueGateOpen;
+		if(this.touchedLast <= 0) {
+			for (int i = (int) this.x - 1; i <= (int) this.x + 1; i++) {
+				for (int j = (int) this.y - 1; j < (int) this.y + 1; j++) {
+					for (Thing a : MainActivity.getFromLevel(i, j)) {
+						if (this.isNextTo(a) && (a.id.equals("player") || a.id.contains("enemy"))) {
+							wasTouched = true;
+							this.touchedLast = 5;
+							MainActivity.isBlueGateOpen = !MainActivity.isBlueGateOpen;
+						}
 					}
-					this.touchedLast = 5;
 				}
 			}
-		}
-		if(!wasTouched) {
-			this.touchedLast -= 1;
+		} else {
+			this.touchedLast--;
 		}
 		return false;
 	}
