@@ -1,5 +1,7 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class EnemyOnlyJump extends Enemy {
 
 	public EnemyOnlyJump(double x, double y) {
@@ -7,12 +9,14 @@ public class EnemyOnlyJump extends Enemy {
 	}
 	
 	public boolean move() {
-		if(Main.isWPressed) {
-			for(int i = 0; i < Main.level.size(); i++) {
-				Thing a = Main.level.get(i);
-				if(a != null && !a.equals(this) && (a.id.contains("wall") || a.id.contains("enemy")) && this.dy >= 0 && this.above(a) && this.y + Main.SPRITE_HEIGHT + 1 >= a.y) {
-					this.dy = -10;
-					break;
+		if(MainActivity.upPressed) {
+			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
+				for(int j = (int) this.y; j <= (int) this.y + 1; j++) {
+					for (Thing a : MainActivity.getFromLevel(i, j)) {
+						if (!a.equals(this) && (a.id.contains("wall") || a.id.contains("enemy")) && this.dy >= 0 && this.above(a) && this.y + Thing.HEIGHT + 1 >= a.y) {
+							this.dy = -10;
+						}
+					}
 				}
 			}
 		}

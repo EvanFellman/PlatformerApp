@@ -1,5 +1,7 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class DisappearingWall extends Thing {
 	public int disappearCount;
 	public DisappearingWall(double x, double y) {
@@ -8,16 +10,14 @@ public class DisappearingWall extends Thing {
 	}
 	
 	public boolean move() {
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				Thing a = Main.getFromMapMoving(this.x + (i * Main.SPRITE_WIDTH), this.y + (j * Main.SPRITE_HEIGHT));
-				if(a == null) {
-					continue;
-				}
-				if(this.isNextTo(a)) {
-					disappearCount--;
-					if(disappearCount <= 0) {
-						this.die();
+		for(int i = (int)this.x - 1; i <= (int)this.x + 1; i++) {
+			for (int j = (int) this.y - 1; j <= (int) this.y + 1; j++) {
+				for (Thing a : MainActivity.getFromLevel(i, j)) {
+					if (a.id.equals("player") || a.id.contains("enemy")) {
+						disappearCount--;
+						if (disappearCount <= 0) {
+							this.die();
+						}
 					}
 				}
 			}
@@ -26,7 +26,6 @@ public class DisappearingWall extends Thing {
 	}
 
 	public void die() {
-		Main.removeFromMap(this);
-		Main.level.remove(this);
+		MainActivity.removeFromLevel(this);
 	}
 }

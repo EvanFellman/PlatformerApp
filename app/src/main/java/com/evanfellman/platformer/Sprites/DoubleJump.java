@@ -1,6 +1,6 @@
 package com.evanfellman.platformer.Sprites;
 
-import com.evanfellman.platformer.PlayerState;
+import com.evanfellman.platformer.Activites.MainActivity;
 
 public class DoubleJump extends Thing {
 
@@ -10,7 +10,7 @@ public class DoubleJump extends Thing {
 	
 	@Override
 	public boolean move() {
-		for(Player p: Main.player) {
+		for(Player p: MainActivity.player) {
 			if(p.isTouching(this)) {
 				p.playerState.setValue(PlayerState.DOUBLEJUMP);
 				this.die();
@@ -21,7 +21,6 @@ public class DoubleJump extends Thing {
 	
 	@Override
 	public void die() {
-		Main.removeFromMap(this);
-		Main.level.remove(this);
+		MainActivity.removeFromLevel(this);
 	}
 }

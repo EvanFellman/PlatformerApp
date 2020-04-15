@@ -1,66 +1,71 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public abstract class Enemy extends Thing {
 	public Enemy(double x, double y, String id, int picX, int picY) {
 		super(x, y, id, picX, picY);
 	}
 	
 	public boolean move() {
-		Main.removeFromMap(this);
+		MainActivity.removeFromLevel(this);
 		if(this.dy > 15) {
 			this.dy = 15;
 		}
 		boolean nearWalll = false, nearWallMovingl = false, nearWallr = false, nearWallMovingr = false;
 		this.x += this.dx;
-		for(int i = 0; i < Main.level.size(); i++) {
-			Thing a = Main.level.get(i);
-			if(a != null && (a.id.contains("wall") || (!this.equals(a) && a.id.equals("player"))) && this.isTouching(a)) {
-				if(a.x > this.x) {
-					if(a.id.equals("wall moving")) {
-						if(a.dx < 0) {
-							nearWallMovingr = true;
+		for(int i = (int)this.x - 1; i <= (int)this.x + 1; i++){
+			for(int j = (int) this.y - 1; j <= (int)this.y + 1; j++){
+				for(Thing a: MainActivity.getFromLevel(i, j)){
+					if((a.id.contains("wall") || (!this.equals(a) && a.id.equals("player"))) && this.isTouching(a)) {
+						if(a.x > this.x) {
+							if(a.id.equals("wall moving")) {
+								if(a.dx < 0) {
+									nearWallMovingr = true;
+								}
+							} else {
+								nearWallr = true;
+							}
+						} else {
+							if(a.id.equals("wall moving")) {
+								if(a.dx > 0) {
+									nearWallMovingl = true;
+								}
+							} else {
+								nearWalll = true;
+							}
 						}
-					} else {
-						nearWallr = true;
-					}
-				} else {
-					if(a.id.equals("wall moving")) {
-						if(a.dx > 0) {
-							nearWallMovingl = true;
+						if((a.y - this.y < a.dy + Thing.HEIGHT && this.y - a.y < Thing.HEIGHT + a.dy)){
+							if(this.x < a.x && this.dx >= 0) {
+								this.dx = 0;
+								this.x = a.getX() - Thing.WIDTH;
+							} else if(this.x > a.x && this.dx <= 0) {
+								this.dx = 0;
+								this.x = a.getX() + Thing.WIDTH;
+							}
 						}
-					} else {
-						nearWalll = true;
 					}
-				}
-				if((a.y - this.y < a.dy + Main.SPRITE_HEIGHT && this.y - a.y < Main.SPRITE_HEIGHT + a.dy)){
-					if(this.x < a.x && this.dx >= 0) {
-						this.dx = 0;
-						this.x = a.getX() - Main.SPRITE_WIDTH;
-					} else if(this.x > a.x && this.dx <= 0) {
-						this.dx = 0;
-						this.x = a.getX() + Main.SPRITE_WIDTH;
+					if(!this.equals(a) && a.id.contains("enemy") && this.isTouching(a)) {
+						if(this.dx > 0 && this.toLeftOf(a)) {
+							this.dx = 0;
+							this.x = a.getX() - Thing.WIDTH;
+						} else if(this.dx < 0 && this.toRightOf(a)) {
+							this.dx = 0;
+							this.x = a.getX() + Thing.WIDTH;
+						}
+					} else if(this.isNextTo(a) && (this.above(a) || this.toLeftOf(a) || this.toRightOf(a)) && a.id.equals("player")) {
+						if(a.dy > this.dy && a.y + 1 < this.y) {
+							if(MainActivity.upPressed) {
+								a.dy = -2.5f;
+							} else {
+								a.dy = 0;
+							}
+							this.die();
+						} else {
+							a.die();
+							return true;
+						}
 					}
-				}
-			}
-			if(a != null && !this.equals(a) && a.id.contains("enemy") && this.isTouching(a)) {
-				if(this.dx > 0 && this.toLeftOf(a)) {
-					this.dx = 0;
-					this.x = a.getX() - Main.SPRITE_WIDTH;
-				} else if(this.dx < 0 && this.toRightOf(a)) {
-					this.dx = 0;
-					this.x = a.getX() + Main.SPRITE_WIDTH;
-				}
-			} else if(a != null && this.isNextTo(a) && (this.above(a) || this.toLeftOf(a) || this.toRightOf(a)) && a.id.equals("player")) {
-				if(a.dy > this.dy && a.y + 1 < this.y) {
-					if(Main.isWPressed) {
-						a.dy = -2.5f;
-					} else {
-						a.dy = 0;
-					}
-					this.die();
-				} else {
-					a.die();
-					return true;
 				}
 			}
 		}
@@ -68,76 +73,78 @@ public abstract class Enemy extends Thing {
 			this.die();
 			return true;
 		}
-		this.dy += Main.GRAVITY;
+		this.dy += MainActivity.GRAVITY;
 		this.y += this.dy;
 		boolean nearWalla = false, nearWallMovinga = false, nearWallb = false, nearWallMovingb = false;
-		for(int i = 0; i < Main.level.size(); i++) {
-			Thing a = Main.level.get(i);
-			if(a != null && this.isTouching(a) && a.id.contains("wall")) {
-				if(a.y > this.y) {
-					if(a.id.equals("wall moving")) {
-						if(a.dy < 0) {
-							nearWallMovinga = true;
+		for(int i = (int)this.x - 1; i <= (int)this.x + 1; i++) {
+			for (int j = (int) this.y - 1; j <= (int) this.y + 1; j++) {
+				for (Thing a : MainActivity.getFromLevel(i, j)) {
+					if(this.isTouching(a) && a.id.contains("wall")) {
+						if(a.y > this.y) {
+							if(a.id.equals("wall moving")) {
+								if(a.dy < 0) {
+									nearWallMovinga = true;
+								}
+							} else {
+								nearWalla = true;
+							}
+						} else {
+							if(a.id.equals("wall moving")) {
+								if(a.dy > 0) {
+									nearWallMovingb = true;
+								}
+							} else {
+								nearWallb = true;
+							}
 						}
-					} else {
-						nearWalla = true;
-					}
-				} else {
-					if(a.id.equals("wall moving")) {
-						if(a.dy > 0) {
-							nearWallMovingb = true;
+						if(this.dy >= 0) {
+							if(this.dy > 0 && a.dy <= 0) {
+								this.dy = 0;
+							}
+							if(a.getY() > this.y) {
+								this.y = a.y - Thing.HEIGHT;
+							}
+						} else if(this.dy < 0) {
+							this.dy = 0;
+							if(this.x + Thing.WIDTH > a.x && this.x - Thing.WIDTH < a.x) {
+								this.y = a.y + Thing.HEIGHT;
+							}
 						}
-					} else {
-						nearWallb = true;
+					}
+					if(!this.equals(a) && this.isTouching(a) && a.id.contains("enemy")) {
+						if(this.dy > 0 && this.above(a)) {
+							if(a.dy < 0){
+								this.dy = 0;
+							}
+							if(a.getY() > this.y && a.y < MainActivity.DEATH_BELOW - Thing.HEIGHT) {
+								this.y = a.y - Thing.HEIGHT;
+							}
+							break;
+						} else if(this.dy < a.dy) {
+							this.dy = 0;
+							this.y = a.y + Thing.HEIGHT;
+							break;
+						}
+					}
+					if(!this.equals(a) && a.id.contains("bullet") && this.isTouching(a)) {
+						this.die();
+						return false;
 					}
 				}
-				if(this.dy >= 0) {
-					if(this.dy > 0 && a.dy <= 0) {
-						this.dy = 0;
-					}
-					if(a.getY() > this.y) {
-						this.y = a.y - Main.SPRITE_HEIGHT;
-					}
-				} else if(this.dy < 0) {
-					this.dy = 0;
-					if(this.x + Main.SPRITE_WIDTH > a.x && this.x - Main.SPRITE_WIDTH < a.x) {
-						this.y = a.y + Main.SPRITE_HEIGHT;
-					}
-				}
-			}
-			if(a != null && !this.equals(a) && this.isTouching(a) && a.id.contains("enemy")) {
-				if(this.dy > 0 && this.above(a)) {
-					if(a.dy < 0){
-						this.dy = 0;
-					}
-					if(a.getY() > this.y && a.y < Main.DEATH_BELOW - Main.SPRITE_HEIGHT) {
-						this.y = a.y - Main.SPRITE_HEIGHT;
-					}
-					break;
-				} else if(this.dy < a.dy) {
-					this.dy = 0;
-					this.y = a.y + Main.SPRITE_HEIGHT;
-					break;
-				}
-			}
-			if(a != null && !this.equals(a) && a.id.contains("bullet") && this.isTouching(a)) {
-				this.die();
-				return false;
 			}
 		}
 		if((nearWalla && nearWallMovingb) || (nearWallMovinga && nearWallb) || (nearWallMovinga && nearWallMovingb)) {
 			this.die();
 			return true;
 		}
-		if(this.y > Main.DEATH_BELOW) {
+		if(this.y > MainActivity.DEATH_BELOW) {
 			this.die();
 		}
-		Main.putInMap(this);
+		MainActivity.putInLevel(this);
 		return false;
 	}
 	
 	public void die() {
-		Main.removeFromMap(this);
-		Main.level.remove(this);
+		MainActivity.removeFromLevel(this);
 	}
 }

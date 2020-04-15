@@ -8,12 +8,13 @@ import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.evanfellman.platformer.R;
 import com.evanfellman.platformer.Sprites.Player;
 import com.evanfellman.platformer.Sprites.Thing;
 import java.util.ArrayList;
 
 public class PlayCustomLevelActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,9 @@ class CustomView extends View{
 
     @Override
     public void onDraw(Canvas c){
+        MainActivity.upPressed = findViewById(R.id.CustomLevelUp).isPressed();
+        MainActivity.leftPressed = findViewById(R.id.CustomLevelLeft).isPressed();
+        MainActivity.rightPressed = findViewById(R.id.CustomLevelRight).isPressed();
         drawBackground(c);
         if(MainActivity.deadPlayer) {
             for(int i = -1 * c.getWidth(); i < c.getWidth(); i++){
@@ -56,6 +60,18 @@ class CustomView extends View{
             for(Player i: MainActivity.player) {
                 i.move();
                 i.display(c, MainActivity.cameraX, MainActivity.cameraY);
+                while(i.getX() - MainActivity.cameraX < MainActivity.screen.x / 4) {
+                    MainActivity.cameraX--;
+                }
+                while(i.getX() - MainActivity.cameraX > 3 * MainActivity.screen.x / 4) {
+                    MainActivity.cameraX++;
+                }
+                while(i.getY() - MainActivity.cameraY < MainActivity.screen.y / 4) {
+                    MainActivity.cameraY--;
+                }
+                while(i.getY() - MainActivity.cameraY > 3 * MainActivity.screen.y / 4) {
+                    MainActivity.cameraY++;
+                }
             }
             MainActivity.deadPlayerCounter--;
             Paint paint = new Paint();
@@ -75,8 +91,24 @@ class CustomView extends View{
                     }
                 }
             }
-            for(Player i: MainActivity.player){
+            for(Player i: MainActivity.player) {
                 i.display(c, MainActivity.cameraX, MainActivity.cameraY);
+            }
+            for(Player i: MainActivity.player) {
+                i.move();
+                i.display(c, MainActivity.cameraX, MainActivity.cameraY);
+                while(i.getX() - MainActivity.cameraX < MainActivity.screen.x / 4) {
+                    MainActivity.cameraX--;
+                }
+                while(i.getX() - MainActivity.cameraX > 3 * MainActivity.screen.x / 4) {
+                    MainActivity.cameraX++;
+                }
+                while(i.getY() - MainActivity.cameraY < MainActivity.screen.y / 4) {
+                    MainActivity.cameraY--;
+                }
+                while(i.getY() - MainActivity.cameraY > 3 * MainActivity.screen.y / 4) {
+                    MainActivity.cameraY++;
+                }
             }
             if(MainActivity.deadPlayer) {
                 for (Player i : MainActivity.player) {

@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
     public static boolean deadPlayer;
     public static int deadPlayerCounter;
     public static Point screen;
+    public static final double GRAVITY = 0.5;
+    public static double DEATH_BELOW;
+    public static boolean upPressed = false;
+    public static boolean leftPressed = false;
+    public static boolean rightPressed = false;
     //Indexed by x coordinate then y coordinate then its a set
     public static SparseArray<SparseArray<ArrayList<Thing>>> level;
     @Override
@@ -115,11 +120,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static void loadLevel(String file) {
         //load from file
+        upPressed = false;
+        leftPressed = false;
+        rightPressed = false;
         Bitmap levelImg = BitmapFactory.decodeFile(file);
         player = new ArrayList<Player>();
         level = new SparseArray<>();
         isBlueGateOpen = false;
         isGreenGateOpen = false;
+        deadPlayer = false;
+        deadPlayerCounter = 100;
+        DEATH_BELOW = levelImg.getHeight() * Thing.HEIGHT;
         for(int x = 0; x < levelImg.getWidth(); x++) {
             for (int y = 0; y < levelImg.getHeight(); y++) {
                 int pixel = levelImg.getPixel(x, y);

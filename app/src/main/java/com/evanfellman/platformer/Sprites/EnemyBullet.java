@@ -1,5 +1,7 @@
 package com.evanfellman.platformer.Sprites;
 
+import com.evanfellman.platformer.Activites.MainActivity;
+
 public class EnemyBullet extends Enemy {
 	public int direction;
 	public final static int UP = 1;
@@ -14,52 +16,64 @@ public class EnemyBullet extends Enemy {
 	}
 	
 	public boolean move() {
-		Main.removeFromMap(this);
+		MainActivity.removeFromLevel(this);
 		this.x += this.dx;
 		this.y += this.dy;
 		switch(this.direction) {
 		case LEFT:
-			for(int i = 0; i < Main.level.size(); i++) {
-				Thing a = Main.level.get(i);
-				double x = this.x - a.getX();
-				if(this.isTouching(a) && a.id.contains("wall") && x < Main.SPRITE_WIDTH) {
-					this.die();
+			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
+				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+					for(Thing a: MainActivity.getFromLevel(i, j)){
+						double x = this.x - a.getX();
+						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.WIDTH) {
+							this.die();
+						}
+					}
 				}
 			}
 			this.dx = -1 * this.speed;
 			break;
 		case RIGHT:
-			for(int i = 0; i < Main.level.size(); i++) {
-				Thing a = Main.level.get(i);
-				double x = this.x - a.getX();
-				if(this.isTouching(a) && a.id.contains("wall") && x < Main.SPRITE_WIDTH) {
-					this.die();
+			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
+				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+					for(Thing a: MainActivity.getFromLevel(i, j)){
+						double x = this.x - a.getX();
+						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.WIDTH) {
+							this.die();
+						}
+					}
 				}
 			}
 			this.dx = 1 * this.speed;
 			break;
 		case UP:
-			for(int i = 0; i < Main.level.size(); i++) {
-				Thing a = Main.level.get(i);
-				double y = this.y - a.getY();
-				if(this.isTouching(a) && a.id.contains("wall") && y < Main.SPRITE_HEIGHT) {
-					this.die();
+			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
+				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+					for(Thing a: MainActivity.getFromLevel(i, j)){
+						double y = this.y - a.getY();
+						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.HEIGHT) {
+							this.die();
+						}
+					}
 				}
 			}
 			this.dy = -1 * this.speed;
 			break;
 		case DOWN:
-			for(int i = 0; i < Main.level.size(); i++) {
-				Thing a = Main.level.get(i);
-				double y = this.y - a.getY();
-				if(this.isTouching(a) && a.id.contains("wall") && y < Main.SPRITE_HEIGHT) {
-					this.die();
+			for(int i = (int) this.x - 1; i <= (int) this.x + 1; i++){
+				for(int j = (int) this.y - 1; j <= (int) this.y + 1; j++){
+					for(Thing a: MainActivity.getFromLevel(i, j)){
+						double y = this.y - a.getY();
+						if(this.isTouching(a) && a.id.contains("wall") && x < Thing.HEIGHT) {
+							this.die();
+						}
+					}
 				}
 			}
 			this.dy = 1 * this.speed;
 			break;
 		}
-		Main.putInMap(this);
+		MainActivity.putInLevel(this);
 		return false;
 	}
 
