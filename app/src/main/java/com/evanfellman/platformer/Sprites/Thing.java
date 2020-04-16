@@ -87,7 +87,10 @@ public abstract class Thing {
 	}
 	
 	public void display(Canvas c, int cameraX, int cameraY) {
-		c.drawBitmap(this.pic, ((int)this.x) - cameraX, ((int)this.y) - cameraY, new Paint());
+		Paint p = new Paint();
+		p.setARGB(255, 255, 0, 0);
+		c.drawRect(new Rect(((int)this.x) - cameraX, ((int)this.y) - cameraY, Thing.WIDTH + ((int)this.x) - cameraX, Thing.HEIGHT + ((int)this.y) - cameraY), p);
+		c.drawBitmap(this.pic, ((int)this.x) - cameraX, ((int)this.y) - cameraY, p);
 	}
 	
 	@Override

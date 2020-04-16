@@ -39,6 +39,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static Bitmap TEXTURES;
+    public static Bitmap TEST_LEVEL;
     public static int cameraX;
     public static int cameraY;
     public static int startX;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TEST_LEVEL = BitmapFactory.decodeResource(getResources(), R.drawable.test_level);
         TEXTURES = BitmapFactory.decodeResource(getResources(), R.drawable.textures);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -123,13 +125,15 @@ public class MainActivity extends AppCompatActivity {
         upPressed = false;
         leftPressed = false;
         rightPressed = false;
-        Bitmap levelImg = BitmapFactory.decodeFile(file);
+//        Bitmap levelImg = BitmapFactory.decodeFile(file);
+        Bitmap levelImg = TEST_LEVEL;
         player = new ArrayList<Player>();
         level = new SparseArray<>();
         isBlueGateOpen = false;
         isRedGateOpen = false;
         deadPlayer = false;
         deadPlayerCounter = 100;
+        System.out.println(levelImg);
         DEATH_BELOW = levelImg.getHeight() * Thing.HEIGHT;
         for(int x = 0; x < levelImg.getWidth(); x++) {
             for (int y = 0; y < levelImg.getHeight(); y++) {
@@ -237,5 +241,6 @@ public class MainActivity extends AppCompatActivity {
                 cameraY = (int) (player.get(0).getY() - (screen.y * 0.5));
             }
         }
+        System.out.println(level);
     }
 }
