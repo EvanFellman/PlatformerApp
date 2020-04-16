@@ -36,7 +36,8 @@
         android:id="@+id/CustomLevelLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="<"
         tools:layout_editor_absoluteX="392dp"
-        tools:layout_editor_absoluteY="291dp" />
+        tools:layout_editor_absoluteY="291dp"
+        android:text="left"
+        />
 </android.support.constraint.ConstraintLayout>

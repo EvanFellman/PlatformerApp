@@ -5,9 +5,14 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.evanfellman.platformer.R;
 import com.evanfellman.platformer.Sprites.Player;
@@ -18,9 +23,13 @@ public class PlayCustomLevelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         int levelNum = getIntent().getIntExtra("levelNum", 0);
-        setContentView(new CustomView(this, levelNum));
+        View customView = new CustomView(this, levelNum, new View[] {findViewById(R.id.CustomLevelUp), findViewById(R.id.CustomLevelLeft), findViewById(R.id.CustomLevelRight)});
+        LinearLayout layout = new LinearLayout(this);
+        this.addContentView(customView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (MainActivity.screen.x * (1.0 / 2))));
+//        layout.addView(customView);
+//        setContentView(layout.getId());
     }
 
     @Override
@@ -30,19 +39,31 @@ public class PlayCustomLevelActivity extends AppCompatActivity {
 }
 
 class CustomView extends View{
-
+    View[] buttons;
     int levelNum;
 
-    public CustomView(final Context context, int levelNum) {
+    public CustomView(final Context context, int levelNum, View[] buttons) {
         super(context);
         this.levelNum = levelNum;
+        this.buttons = buttons;
+        System.out.println("hiii");
+        System.out.println(findViewById(R.id.CustomLevelUp));
+//        MainActivity.loadLevel("./level0.png");
     }
 
     @Override
     public void onDraw(Canvas c){
-        MainActivity.upPressed = findViewById(R.id.CustomLevelUp).isPressed();
-        MainActivity.leftPressed = findViewById(R.id.CustomLevelLeft).isPressed();
-        MainActivity.rightPressed = findViewById(R.id.CustomLevelRight).isPressed();
+        Paint p = new Paint();
+        p.setARGB(255, 255, 0, 0);
+        c.drawRect(new Rect(0,0,c.getWidth(), c.getHeight()), p);
+        System.out.println("hi");
+        int ttt = 2;
+        if(ttt > 1){
+            return;
+        }
+//        MainActivity.upPressed = this.buttons[0].isPressed();
+//        MainActivity.leftPressed = this.buttons[1].isPressed();
+//        MainActivity.rightPressed = this.buttons[2].isPressed();
         drawBackground(c);
         if(MainActivity.deadPlayer) {
             for(int i = -1 * c.getWidth(); i < c.getWidth(); i++){
