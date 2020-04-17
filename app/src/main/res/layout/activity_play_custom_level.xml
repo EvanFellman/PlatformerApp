@@ -4,40 +4,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activites.PlayCustomLevelActivity">
-
-    <View
-        android:id="@+id/customView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/CustomLevelUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="/\"
-        tools:layout_editor_absoluteX="481dp"
-        tools:layout_editor_absoluteY="244dp" />
-
-    <Button
-        android:id="@+id/CustomLevelRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=">"
-        tools:layout_editor_absoluteX="569dp"
-        tools:layout_editor_absoluteY="292dp" />
-
-    <Button
-        android:id="@+id/CustomLevelLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="392dp"
-        tools:layout_editor_absoluteY="291dp"
-        android:text="left"
-        />
-</android.support.constraint.ConstraintLayout>
+    tools:context=".Activites.PlayCustomLevelActivity"/>

@@ -237,8 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (Color.red(pixel) == 224 && Color.green(pixel) == 0 && Color.blue(pixel) == 0) {
                     putInLevel(new SpikeDestroyer(Thing.WIDTH * x, Thing.HEIGHT * y));
                 }
-                cameraX = (int) (player.get(0).getX() - (screen.x * 0.5));
-                cameraY = (int) (player.get(0).getY() - (screen.y * 0.5));
+                cameraX = (int) (player.get(0).getX() - (screen.y * 0.5));
+                cameraY = (int) (player.get(0).getY() - (screen.x * 0.5));
             }
         }
         System.out.println(level);
