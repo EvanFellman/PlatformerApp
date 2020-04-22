@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToCustomLevel(View view){
-        Intent goToCustomLevelIntent = new Intent(this, PlayCustomLevelActivity.class);
+        Intent goToCustomLevelIntent = new Intent(this, CustomActivity.class);
         goToCustomLevelIntent.putExtra("levelNum", 0);
         startActivity(goToCustomLevelIntent);
     }

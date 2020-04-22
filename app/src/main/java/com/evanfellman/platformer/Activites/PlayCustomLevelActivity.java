@@ -33,22 +33,22 @@ public class PlayCustomLevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         int levelNum = getIntent().getIntExtra("levelNum", 0);
-//        View customView = new CustomView(this, levelNum);
-//        this.addContentView(customView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (screen.x * (1.0 / 2))));
-//        upBtn = new Button(this);
-//        upBtn.setText("^");
-//        this.addContentView(upBtn, new RelativeLayout.LayoutParams(screen.y, screen.x / 4));
-//        upBtn.setY(screen.x / 2);
-//        rightBtn = new Button(this);
-//        rightBtn.setText(">");
-//        this.addContentView(rightBtn, new RelativeLayout.LayoutParams(screen.y / 2, screen.x / 4));
-//        rightBtn.setY(3 * screen.x / 4);
-//        rightBtn.setX(screen.y / 2);
-//        leftBtn = new Button(this);
-//        leftBtn.setText("<");
-//        this.addContentView(leftBtn, new RelativeLayout.LayoutParams(screen.y / 2, screen.x / 4));
-//        leftBtn.setY(3 * screen.x / 4);
-//        leftBtn.setX(0);
+        View customView = new GameView(this, levelNum);
+        this.addContentView(customView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (screen.x * (1.0 / 2))));
+        upBtn = new Button(this);
+        upBtn.setText("^");
+        this.addContentView(upBtn, new RelativeLayout.LayoutParams(screen.y, screen.x / 4));
+        upBtn.setY(screen.x / 2);
+        rightBtn = new Button(this);
+        rightBtn.setText(">");
+        this.addContentView(rightBtn, new RelativeLayout.LayoutParams(screen.y / 2, screen.x / 4));
+        rightBtn.setY(3 * screen.x / 4);
+        rightBtn.setX(screen.y / 2);
+        leftBtn = new Button(this);
+        leftBtn.setText("<");
+        this.addContentView(leftBtn, new RelativeLayout.LayoutParams(screen.y / 2, screen.x / 4));
+        leftBtn.setY(3 * screen.x / 4);
+        leftBtn.setX(0);
 
 
 //        layout.addView(customView);

@@ -10,7 +10,8 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activites.PlayRandomLevelActivity"></activity>
+        <activity android:name=".Activites.CustomActivity"></activity>
+        <activity android:name=".Activites.PlayRandomLevelActivity" />
         <activity android:name=".Activites.PlayCustomLevelActivity" />
         <activity android:name=".Activites.MainActivity">
             <intent-filter>

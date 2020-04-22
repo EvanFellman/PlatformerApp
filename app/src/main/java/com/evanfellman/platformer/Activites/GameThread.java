@@ -1,6 +1,5 @@
 package com.evanfellman.platformer.Activites;
 
-import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 class GameThread extends Thread {
